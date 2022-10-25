@@ -1,0 +1,27 @@
+﻿@page "/"
+@using MauiApp4.API
+@using MauiApp4.Model
+@using Radzen
+@using Radzen.Blazor
+@inject IProductService ProductService
+
+
+<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+                Data="@list" TItem="Product" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
+    <Columns>
+        <RadzenDataGridColumn TItem="Product" Property="id" Filterable="false" Title="ID" Frozen="true" Width="80px" TextAlign="TextAlign.Center" />
+        <RadzenDataGridColumn TItem="Product" Property="userId" Title="User ID" Frozen="true" Width="160px" />
+        <RadzenDataGridColumn TItem="Product" Property="title" Title="Title" Width="160px" />
+        <RadzenDataGridColumn TItem="Product" Property="completed" Title="Completed" Width="200px" />
+
+
+    </Columns>
+</RadzenDataGrid>
+@code {
+    IEnumerable<Product> list;
+
+    protected override async Task OnInitializedAsync()
+    {
+        list = await ProductService.GetAll();
+    }
+}
